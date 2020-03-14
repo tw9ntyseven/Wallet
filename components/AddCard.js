@@ -3,13 +3,13 @@ import {StyleSheet, TouchableHighlight, Alert, Text, View, ScrollView, TextInput
 import styled from 'styled-components/native';
 
 
-const AddCard = ({ history, onSubmit, titles, prices }) => {
-    const [titles,setTitles] = useState('')
-    const [prices,setPrices] = useState('')
+const AddCard = ({ history, onSubmit }) => {
+    const [title,setTitle] = useState('')
+    const [price,setPrice] = useState('')
     const pressHandler = () => {
-        if (titles&&prices.trim()) {
-            onSubmit(titles,prices)
-            setPrices('')
+        if (title&&price.trim()) {
+            onSubmit(title,price, true)
+            setPrice('')
             setTitle('')
         } else {
             Alert.alert('Название и цена не может быть пустым!')
@@ -19,22 +19,22 @@ const AddCard = ({ history, onSubmit, titles, prices }) => {
     return (
         <Wrapper>
             <Button title="< Back " color="#000" onPress={() => history.push("/")} />
-        <AddForm>
+            <AddForm>
                 <Input
-                    onChangeText={setTitles}
-                    value={titles}
+                    onChangeText={setTitle}
+                    value={title}
                     placeholder="Введите название"
                     />
-            <Input
-                onChangeText={setPrices}
-                value={prices}
-                placeholder="Введите цену"
-                keyboardType="number-pad"
-                />
-        </AddForm>
-        <Button width='95%' color='#000' title='Добавить' onPress={pressHandler} />
+                <Input
+                    onChangeText={setPrice}
+                    value={price}
+                    placeholder="Введите цену"
+                    keyboardType="number-pad"
+                    />
+            </AddForm>
+            <Button width='95%' color='#000' title='Добавить' onPress={pressHandler} />
         </Wrapper>
-    );
+    );к
 }
 
 

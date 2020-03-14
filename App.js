@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { NativeRouter, Switch, Route } from 'react-router-native';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, AsyncStorage} from 'react-native';
 import styled from 'styled-components/native';
 
 import Group from './components/Group';
 import Diagram from './components/Diagram';
 import AddCard from './components/AddCard';
 
-function HomeScreen({history}) {
+function HomeScreen({history, items}) {
     // const [card, setCard] = useState([])
 
 // const addCard = (title, price, income) => {
@@ -32,23 +32,7 @@ function HomeScreen({history}) {
             </Diagram> */}
             <ScrollView>
               <Group 
-                items={[
-                {
-                    income: false,
-                    title: 'Кофа',
-                    price: '100р',
-                },
-                {
-                    income: true,
-                    title: 'Мама дала мани',
-                    price: '200р',
-                },
-                {
-                    income: false,
-                    title: 'На проезд',
-                    price: '17р',
-                },
-                ]}> 
+                items={items}> 
                 </Group>
             </ScrollView>
         </Container>
@@ -57,12 +41,42 @@ function HomeScreen({history}) {
 
 
 export default class App extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            items : [{
+                    income: false,
+                    title: 'Кофа',
+                    price: '100р',
+                }]
+        }
+
+        this.addCard = this.addCard.bind(this);
+    }
+    async componentDidMount() {
+        // AsyncStorage.setItem('items', undefined);
+        let data = await AsyncStorage.getItem('items').then((items, err) => {return JSON.parse(items)})
+        if(data !== null && data !== undefined){
+            this.setState({ items: data })
+        }
+    }
+
+    async addCard(title, price, income) {
+        const { items } = this.state
+        items.push({title, price, income});
+        await AsyncStorage.setItem('items', JSON.stringify(items)).then(err => console.log(err))
+        let data = await AsyncStorage.getItem('items').then((items, err) => (JSON.parse(items)))
+        this.setState({
+            items: data
+        })
+    }
+
     render(){
         return (
             <NativeRouter>
                 <Switch>
-                    <Route exact path="/" component={HomeScreen} />
-                    <Route exact path="/card" component={AddCard} />
+                    <Route exact path="/" component={(props) => (<HomeScreen history={props.history} items={this.state.items}/>)} />
+                    <Route exact path="/card" component={(props) => (<AddCard history={props.history} onSubmit={this.addCard}/>)} />
                 </Switch>
             </NativeRouter>
         );

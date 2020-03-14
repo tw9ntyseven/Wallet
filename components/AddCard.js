@@ -11,6 +11,7 @@ const AddCard = ({ history, onSubmit }) => {
             onSubmit(title,price, true)
             setPrice('')
             setTitle('')
+            history.push('/')
         } else {
             Alert.alert('Название и цена не может быть пустым!')
         }

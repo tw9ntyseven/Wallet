@@ -1,24 +1,57 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import styled from 'styled-components/native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-const Group = ({ income, items }) => {
+const leftActions = () => {
     return (
-            <GroupBlock>
-                {items.map((item, index) => (
+        <SwipeMenu>
+            <SwipeText>Delete</SwipeText>
+        </SwipeMenu>
+    );
+}
+
+const Group = ({income, items, onSwipeFromLeft, onRightPress}) => {
+    return (
+        <GroupBlock>
+            {items.map((item, index) => (
+                <Swipeable renderLeftActions={leftActions}>
+                <WrapperGroupItem>
                     <GroupItem income={item.income} key={index}>
                         <GroupTitle>{item.title}</GroupTitle>
                         <GroupPrice>{item.price}</GroupPrice>
                     </GroupItem>
-                ))}
-            </GroupBlock>
+                    </WrapperGroupItem>
+                </Swipeable>
+            ))}
+        </GroupBlock>
     );
 };
 
 Group.defaultProps = {
-    items: [],
+    items: []
 };
+const SwipeText = styled.Text `
+  color: #fff;
+`;
 
+const SwipeMenu = styled.View `
+  background: red;
+  width: 55px;
+  height: 50px;
+  display: flex;
+  padding: 5px;
+  margin-left: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+`;
+
+const WrapperGroupItem = styled.View `
+  display:flex;
+  align-items: center;
+`;
 const GroupPrice = styled.Text `
   color: #fff;
   position: absolute;
@@ -48,7 +81,5 @@ const GroupItem = styled.TouchableOpacity `
 
 const GroupBlock = styled.View `
   margin-top: 10px;
-  display: flex;
-  align-items: center;
 `;
 export default Group;

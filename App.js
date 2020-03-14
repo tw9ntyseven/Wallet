@@ -8,19 +8,6 @@ import Diagram from './components/Diagram';
 import AddCard from './components/AddCard';
 
 function HomeScreen({history, items}) {
-    // const [card, setCard] = useState([])
-
-// const addCard = (title, price, income) => {
-//     setCard(prev => [
-//         ...prev, 
-//         {
-//         id: Date.now().toString(),
-//         income: income,
-//         title: title,
-//         price: price,
-//         }
-// ])
-// }
     return (
         <Container>
             <GroupTop>
@@ -32,7 +19,10 @@ function HomeScreen({history, items}) {
             </Diagram> */}
             <ScrollView>
               <Group 
-                items={items}> 
+                items={items}
+                // onSwipeFromLeft={}
+                // onRightPress={}
+                > 
                 </Group>
             </ScrollView>
         </Container>

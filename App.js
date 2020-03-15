@@ -6,36 +6,37 @@ import styled from 'styled-components/native';
 import Group from './components/Group';
 import Diagram from './components/Diagram';
 import AddCard from './components/AddCard';
+import FooterBar from './components/Footer-Tab';
 
 function HomeScreen({history, items}) {
     return (
         <Container>
             <GroupTop>
                 <GroupTitle>Wallet</GroupTitle>
-                <GroupAdd onPress={() => history.push("/card")}>+</GroupAdd>
+                <GroupAdd onPress={() => history.push('/card')}>+</GroupAdd>
             </GroupTop>
             {/* <Diagram>
 
             </Diagram> */}
-            <ScrollView>
+            <ScrollPanel>
               <Group 
                 items={items}
                 // onSwipeFromLeft={}
                 // onRightPress={}
                 > 
                 </Group>
-            </ScrollView>
+            </ScrollPanel>
+            <FooterBar />
         </Container>
     );
 }
-
 
 export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             items : [{
-                    income: false,
+                    income: true,
                     title: 'Кофа',
                     price: '100р',
                 }]
@@ -72,6 +73,10 @@ export default class App extends React.Component {
         );
     }
 }
+
+const ScrollPanel = styled.ScrollView `
+    margin-bottom: 65px;
+`;
 
 const GroupAdd = styled.Text `
   margin-right: 20px;

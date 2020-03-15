@@ -53,7 +53,7 @@ const WrapperGroupItem = styled.View `
   align-items: center;
 `;
 const GroupPrice = styled.Text `
-  color: #fff;
+  color: #000;
   position: absolute;
   right: 0;
   margin-right: 10px;
@@ -61,7 +61,7 @@ const GroupPrice = styled.Text `
 `;
 
 const GroupTitle = styled.Text `
-  color: #fff;
+  color: #000;
   margin-left: 5px;
   font-size: 23px;
 `;
@@ -71,8 +71,9 @@ const GroupItem = styled.TouchableOpacity `
   display: flex;
   justify-content: center;
   padding: 7px;
-  background: ${props => props.income
-    ? '#00FF7F'
+  background: #fff;
+  border: 3px solid ${props => props.income
+    ? '#21D121'
     : '#DC143C'};
   border-radius: 10px;
   width: 95%;

@@ -3,9 +3,9 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import styled from 'styled-components/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-const leftActions = () => {
+const RemoveItems = ({RemoveItems}) => {
     return (
-        <SwipeMenu>
+        <SwipeMenu onPress={RemoveItems}>
             <SwipeText>Delete</SwipeText>
         </SwipeMenu>
     );
@@ -15,7 +15,7 @@ const Group = ({income, items, onSwipeFromLeft, onRightPress}) => {
     return (
         <GroupBlock>
             {items.map((item, index) => (
-                <Swipeable renderLeftActions={leftActions}>
+                <Swipeable renderLeftActions={RemoveItems}>
                 <WrapperGroupItem>
                     <GroupItem income={item.income} key={index}>
                         <GroupTitle>{item.title}</GroupTitle>
@@ -35,7 +35,7 @@ const SwipeText = styled.Text `
   color: #fff;
 `;
 
-const SwipeMenu = styled.View `
+const SwipeMenu = styled.TouchableOpacity `
   background: red;
   width: 55px;
   height: 50px;

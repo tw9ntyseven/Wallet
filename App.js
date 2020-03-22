@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, ScrollView, AsyncStorage} from 'react-native';
 import styled from 'styled-components/native';
 
 import Group from './components/Group';
+import RemoveItems from './components/Group';
 import Diagram from './components/Diagram';
 import AddCard from './components/AddCard';
 import FooterBar from './components/Footer-Tab';
@@ -61,6 +62,23 @@ export default class App extends React.Component {
             items: data
         })
     }
+    // Delete Items not working
+    async RemoveItems(items) {
+        try{
+            let itemsJSON = await AsyncStorage.getItem('items');
+            let itemsArray = JSON.parse(itemsJSON);
+            alteredItems = itemsArray.filter(function(e){
+                return e.id !== items.id
+            })
+            AsyncStorage.setItem('items', JSON.stringify(alteredItems));
+            this.setState({
+                items:alteredItems
+            })
+        }
+        catch(error){
+            console.log(error)
+        }
+    };
 
     render(){
         return (
@@ -77,13 +95,12 @@ export default class App extends React.Component {
 const ScrollPanel = styled.ScrollView `
     margin-bottom: 65px;
 `;
-
 const GroupAdd = styled.Text `
-  margin-right: 20px;
   position: absolute;
+  right: 0;
+  margin-right: 20px;
   color: green;
   font-size: 35px;
-  right: 0;
 `;
 
 const GroupTitle = styled.Text `
